@@ -1,6 +1,4 @@
 console.log(document.getele)
-let tracker = new Map
-reconstruct()
 try{
     localStorage.getItem("n")
 }
@@ -18,8 +16,9 @@ function getP(){
 
 
 function createP(data){
+    let tracker = new Map()
     tracker.set(data)
-    let template = `<div class="P P${n}"> <h1 name="${n}" id="Phead${n}" class="red" ></h1> <div class="disp"> <ul name="G${data}" id="S${n}" ></ul> <ul name="S${data}" id="S${n}" class="lis"></ul> </div> </div>`
+    let template = `<div class="P P${n}"> <h1 name="${n}" id="Phead${n}" class="red" ></h1> <div class="disp"><ul name="S${data}" id="S${n}" class="lis"></ul> <ul name="G${data}" id="S${n}" ></ul>  </div> </div>`
     let fill = document.getElementById("play")
     let fill2 = document.getElementById("play2")
     let reg = document.createElement('div')
@@ -47,8 +46,6 @@ function print(){
 function save(){
     localStorage.setItem("gameList", document.getElementById("play").innerHTML)
     localStorage.setItem("save", document.getElementById("outp").innerHTML)
-    localStorage.setItem("Vtracker", tracker.values())
-    console.log(localStorage.getItem("Vtracker"))
 }
 function clears(){
     console.log("red")
@@ -57,24 +54,15 @@ function clears(){
     document.getElementById("play2").outerHTML = '<select id="play2"> </select>'
     localStorage.setItem("save", '')
     localStorage.setItem("n", 0)
-    localStorage.setItem("Vtracker", '')
-    tracker = new Map()
 }
 print()
 function addGame(){
-
     let data = document.getElementById("play2").value
     let Gdata = document.getElementsByName(`G${data}`)
     let game = document.getElementById("Gselect").value
     let temp = document.createElement("li")
-    if(Gdata[0].childElementCount == 3){
-        return
-    }
     temp.innerHTML = game
-    console.log(temp)
     Gdata[0].appendChild(temp)
-    tracker.set(data, [game])
-    console.table(tracker)
 }
 
 function addScores(){
@@ -93,14 +81,31 @@ function addScores(){
         console.log(scoreReady[i])
         temp.innerHTML = scoreReady[i]
         Sdata[0].appendChild(temp)
+        tracker.set(data, scoreReady[i])
         
     }
 
     document.getElementById("play").value = ""
     save()
 }
-function reconstruct(){
-    
-    let val = localStorage.getItem("Vtracker").split(",")
-    console.log(val[1])
-}
+
+let data = document.getElementById("play").value
+    let Sdata = document.getElementsByName(`S${data}`)
+    let score = document.getElementById("Sco").value
+    console.log(score)
+    let scoreReady = score.split(",")
+    console.log(scoreReady)
+    let temp = ""
+    for (let i = 0; i < scoreReady.length; i++) {
+        if(data[0].childElementCount == 3 || data.includes(typeof String)){
+            return
+        }
+        temp = document.createElement("li")
+        console.log(scoreReady[i])
+        temp.innerHTML = scoreReady[i]
+        Sdata[0].appendChild(temp)
+        
+    }
+
+    document.getElementById("play").value = ""
+    save()

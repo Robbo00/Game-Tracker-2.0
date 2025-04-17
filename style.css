@@ -51,6 +51,7 @@ hr{
     flex-direction: row;
     flex-wrap: row;
     flex-flow: row;
+    gap: 55px;
 }
 .scroll{
     position: relative;
@@ -68,7 +69,12 @@ hr{
     border-radius: 15px;
     color: white;
 }
-.P1{
+.red{
     text-align: center;
-    color: white;
+}
+
+.disp{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
 }

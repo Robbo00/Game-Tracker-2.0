@@ -25,15 +25,16 @@
         <label> Scores</label>
         <select id="play">
         </select>
-        <input type="text">
-        <button type="submit" onclick="addScores()" id="Sco">Add scores</button>
+        <input id="Sco" type="text">
+        <button type="submit" onclick="addScores()" >Add scores</button>
 
         </div> 
            <div class="labi">
 
-            <form>
         <label> Games</label>
-        <select>
+        <select id="play2">
+        </select>
+        <select id="Gselect">
             <option>Marvel Rivals</option>
             <option>Fortnite</option>
             <option>Madden</option>
@@ -41,8 +42,7 @@
             <option>Tekken</option>
             <option>Gta 5</option>
         </select>
-        <button type="submit">Add Game</button>
-            </form>
+        <button onclick="addGame()" type="submit">Add Game</button>
            
         </div>  
         
@@ -53,6 +53,7 @@
                 <button>Most played game</button>
                 <button>Sort by average</button>
                 <button>Chart</button>
+                <button onclick="clears()">Clear</button>
             </div>
     </div>
     <hr>
