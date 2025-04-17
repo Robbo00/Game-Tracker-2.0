@@ -17,7 +17,7 @@ body{
     border: solid 1px red;
     position: relative;
     top: 78px;
-    height: 250px;
+    height: 450px;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -39,12 +39,18 @@ hr{
     top: 70px;
 }
 .out{
-    height: 400px;
-    width: 700px;
+    height: 500px;
+    width: 900px;
     outline: solid salmon 1px;
     position: relative;
-    left: 280px;
-    top: 150px;
+    left: 20%;
+    top: 50px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: row;
+    flex-flow: row;
 }
 .scroll{
     position: relative;
@@ -54,4 +60,15 @@ hr{
     display: flex;
     flex-direction: column;
     gap: 5px;
+}
+.P{
+    height: 175px;
+    width: 275px;
+    background-color: salmon;
+    border-radius: 15px;
+    color: white;
+}
+.P1{
+    text-align: center;
+    color: white;
 }

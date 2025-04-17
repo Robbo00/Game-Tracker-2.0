@@ -18,16 +18,15 @@
 
         <label> Add Player</label>
         <input type="text" id="Pval" class="wrk">
-        <button type="submit" id="Pbut" onclick="addP()">Players</button>
-
+        <button type="submit" id="Pbut" onclick="getP()">Players</button>
         </div> 
            <div class="labi">
 
-            <form>
         <label> Scores</label>
+        <select id="play">
+        </select>
         <input type="text">
-        <button type="submit">Add scor</button>
-            </form>
+        <button type="submit" onclick="addScores()" id="Sco">Add scores</button>
 
         </div> 
            <div class="labi">
@@ -58,7 +57,7 @@
     </div>
     <hr>
     <p class="scroll">.</p>
-    <div class="out">
+    <div class="out" id="outp">
 
     </div>
 </body>
