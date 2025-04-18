@@ -78,3 +78,14 @@ hr{
     flex-direction: row;
     gap: 50px;
 }
+.sum{
+    text-align: center;
+    color: white;
+    background-color: salmon;
+    height: 70%;
+    width: 100%;
+    border-radius: 25px;
+    position: relative;
+    left: 245px;
+    top: 50px;
+}

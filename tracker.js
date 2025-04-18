@@ -1,5 +1,9 @@
 console.log(document.getele)
 let tracker = new Map
+let gamo
+let great = 0
+let curr = 0
+let scores = new Map()
 // reconstruct()
 try{
     localStorage.getItem("n")
@@ -45,9 +49,14 @@ function print(){
 }
 
 function save(){
+    let flat = Array.from(tracker)
+    flat = JSON.stringify(flat)
+    let flato = Array.from(scores)
+    flato = JSON.stringify(flato)
     localStorage.setItem("gameList", document.getElementById("play").innerHTML)
     localStorage.setItem("save", document.getElementById("outp").innerHTML)
-    localStorage.setItem("Vtracker", Array.from(tracker.values()))
+    localStorage.setItem("tracker", flat)
+    localStorage.setItem("scores", flato)
     console.log(localStorage.getItem("Vtracker"))
 }
 function clears(){
@@ -57,8 +66,10 @@ function clears(){
     document.getElementById("play2").outerHTML = '<select id="play2"> </select>'
     localStorage.setItem("save", '')
     localStorage.setItem("n", 0)
-    localStorage.setItem("Vtracker", '')
+    localStorage.setItem("tracker", '')
+    localStorage.setItem("scores", '')
     tracker = new Map()
+    scores = new Map()
     n = 0
 }
 print()
@@ -91,26 +102,100 @@ function addScores(){
     let data = document.getElementById("play").value
     let Sdata = document.getElementsByName(`S${data}`)
     let score = document.getElementById("Sco").value
+    scores.set(data)
     console.log(score)
     let scoreReady = score.split(",")
     console.log(scoreReady)
     let temp = ""
     for (let i = 0; i < scoreReady.length; i++) {
-        if(data[0].childElementCount == 3){
+        if(Sdata.childElementCount == 3){
             return
         }
+        try{
+            let yeso = Array.from(scores.get(data))
+            yeso.push(scoreReady[i])
+            scores.set(data, yeso)
+    }
+    catch{
+        scores.set(data, scoreReady)
+    }
         temp = document.createElement("li")
         console.log(scoreReady[i])
         temp.innerHTML = scoreReady[i]
         Sdata[0].appendChild(temp)
+        
     }
 
     document.getElementById("play").value = ""
     save()
 }
 function reconstruct(){
+    let re = JSON.parse(localStorage.getItem("tracker"))
+    tracker = new Map(re)
+    let reo = JSON.parse(localStorage.getItem("scores"))
+    scores = new Map(reo)
     console.table(tracker)
-    let val = localStorage.getItem("Vtracker").split(",")
-    
+    document.getElementById("outp").innerHTML = localStorage.getItem("save")
+    console.table(scores)
         
     }
+document.addEventListener(onload, reconstruct())
+
+function popular(){
+    let out = document.getElementById("outp")
+    out.innerHTML = `<div id="outp"><div class="sum"> <h1>Summary</h1> <div> <h2>Most Played Game</h2> <p class="MP"></p> </div> </div></div>`
+    gamo = [["Tekken", 0], ['Fortnite', 0], ["Madden", 0], ["2k", 0], ["Marvel Rivals", 0], ["Gta5", 0]]
+
+for (let p of tracker.values()){
+    // p = Array.from(p)
+    for (let z = 0; z < gamo.length ;z++) {
+        for (let i = 0; i < 3; i++) {
+            if(gamo[z][0] == p[i]){
+                gamo[z][1]++
+            }
+        }
+        
+    }
+}
+for (let i = 0; i < gamo.length; i++) {
+    if(gamo[i][1]>great){
+        curr = i
+        great = gamo[i][1]
+    }
+}
+$(".MP").html("Most popular game is " + gamo[curr][0] + " played by (" + gamo[curr][1] + ") players")
+localStorage.setItem("game", gamo[curr][0])
+localStorage.setItem("num", gamo[curr][1])
+}
+function sum(){
+    document.getElementById("outp").innerHTML = localStorage.getItem("save")
+}
+function average(){
+
+    let average = new Map()
+   
+    for (let i = 1; i <= tracker.size; i++) { 
+        let ave = 0
+        let perso = document.getElementById(`Phead${i}`).innerHTML
+        let = pers = scores.get(perso)
+        for (let x = 0; x < pers.length; x++) {
+                ave+=parseInt(pers[x])
+        }
+        average.set(perso, (ave / pers.length))
+
+    }
+    average = new Map ([...average.entries()].sort((a, b) => b[1] - a[1]))
+    console.table(average)
+   document.getElementById("outp").innerHTML = `<div id="outp"><div class="sum"> <h1>Summary</h1> <div> <h2>Most Played Game</h2> <ul id="yess" class="MPo"></ul> </div> </div></div>`
+let yuurr = average.keys
+    for (let z = 0; z < average.size; z++) {
+        let realo = document.createElement('li')
+        realo.innerHTML = `${z}) ${yuurr[z]} with a score of ${average.get(yuurr[z])}`
+        console.log(realo)
+        document.getElementById("yess").appendChild(realo)    }
+    
+
+}
+
+
+console.log(tracker.keys().length)
