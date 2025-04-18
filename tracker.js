@@ -1,6 +1,6 @@
 console.log(document.getele)
 let tracker = new Map
-reconstruct()
+// reconstruct()
 try{
     localStorage.getItem("n")
 }
@@ -47,7 +47,7 @@ function print(){
 function save(){
     localStorage.setItem("gameList", document.getElementById("play").innerHTML)
     localStorage.setItem("save", document.getElementById("outp").innerHTML)
-    localStorage.setItem("Vtracker", tracker.values())
+    localStorage.setItem("Vtracker", Array.from(tracker.values()))
     console.log(localStorage.getItem("Vtracker"))
 }
 function clears(){
@@ -59,6 +59,7 @@ function clears(){
     localStorage.setItem("n", 0)
     localStorage.setItem("Vtracker", '')
     tracker = new Map()
+    n = 0
 }
 print()
 function addGame(){
@@ -73,8 +74,17 @@ function addGame(){
     temp.innerHTML = game
     console.log(temp)
     Gdata[0].appendChild(temp)
-    tracker.set(data, [game])
+    try{
+            let yes = Array.from(tracker.get(data))
+            yes.push(game)
+            tracker.set(data, yes)
+    }
+    catch{
+        tracker.set(data, [game])
+    }
     console.table(tracker)
+    console.log(n)
+    save()
 }
 
 function addScores(){
@@ -93,14 +103,14 @@ function addScores(){
         console.log(scoreReady[i])
         temp.innerHTML = scoreReady[i]
         Sdata[0].appendChild(temp)
-        
     }
 
     document.getElementById("play").value = ""
     save()
 }
 function reconstruct(){
-    
+    console.table(tracker)
     let val = localStorage.getItem("Vtracker").split(",")
-    console.log(val[1])
-}
+    
+        
+    }
