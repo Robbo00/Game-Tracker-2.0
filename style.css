@@ -5,7 +5,7 @@ body{
     overflow-x: hidden;
     overflow-y: scroll;
     font-family: "Special Gothic Condensed One", sans-serif;
-
+    
 }
 .head{
     position: absolute;
@@ -50,12 +50,11 @@ hr{
     overflow-y: auto;
     overflow-x: hidden;
     display: flex;
-    flex-direction: row;
-    flex-wrap: row;
-    flex-flow: row;
-    gap: 55px;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    flex-flow: wrap;
+    gap: 45px;
     display: flex;
-    flex-wrap: row;
 }
 .scroll{
     position: relative;
@@ -69,7 +68,7 @@ hr{
 }
 .P{
     height: 175px;
-    width: 275px;
+    width: 265px;
     background-color: salmon;
     border-radius: 15px;
     color: white;
@@ -126,4 +125,9 @@ button{
 ol{
     position: relative;
     right: 10px;
+}
+.numb{
+    position: relative;
+    left: 300px;
+    width: 250px;
 }

@@ -1,6 +1,6 @@
 console.log(document.getele)
 let tracker = new Map
-let gamo
+let gamo, average
 let great = 0
 let curr = 0
 let scores = new Map()
@@ -12,6 +12,7 @@ catch{
  let n = document.getElementById("outp").childElementCount   
 }
 let n = localStorage.getItem("n")
+// Gets the value in the textbox and create A card for it
 function getP(){
     let x = document.getElementById("Pval").value
     n++
@@ -48,17 +49,25 @@ function print(){
     document.getElementById("play2").innerHTML  = localStorage.getItem("gameList")
 }
 
+// saves everytime something pops off to make sure you ever lose data
 function save(){
     let flat = Array.from(tracker)
     flat = JSON.stringify(flat)
     let flato = Array.from(scores)
     flato = JSON.stringify(flato)
+    let flaty = Array.from(average)
+    flaty = JSON.stringify(flaty)
     localStorage.setItem("gameList", document.getElementById("play").innerHTML)
-    localStorage.setItem("save", document.getElementById("outp").innerHTML)
     localStorage.setItem("tracker", flat)
     localStorage.setItem("scores", flato)
+    localStorage.setItem("average", flaty)
     console.log(localStorage.getItem("Vtracker"))
+    if(document.getElementById("Phead1")){
+        localStorage.setItem("save", document.getElementById("outp").innerHTML)
+    }
 }
+
+// clears every variable
 function clears(){
     console.log("red")
     document.getElementById("outp").outerHTML = '<div class="out" id="outp"> </div>'
@@ -73,6 +82,7 @@ function clears(){
     n = 0
 }
 print()
+// Adds the game to the card by appeneding it to the list using the numbered card logic
 function addGame(){
 
     let data = document.getElementById("play2").value
@@ -98,49 +108,55 @@ function addGame(){
     save()
 }
 
+// Same as above
 function addScores(){
-    let data = document.getElementById("play").value
-    let Sdata = document.getElementsByName(`S${data}`)
-    let score = document.getElementById("Sco").value
-    scores.set(data)
-    console.log(score)
-    let scoreReady = score.split(",")
-    console.log(scoreReady)
-    let temp = ""
-    for (let i = 0; i < scoreReady.length; i++) {
-        if(Sdata.childElementCount == 3){
-            return
-        }
-        try{
-            let yeso = Array.from(scores.get(data))
-            yeso.push(scoreReady[i])
-            scores.set(data, yeso)
-    }
-    catch{
-        scores.set(data, scoreReady)
-    }
-        temp = document.createElement("li")
-        console.log(scoreReady[i])
-        temp.innerHTML = scoreReady[i]
-        Sdata[0].appendChild(temp)
-        
+    let data = document.getElementById("play").value;
+    let Sdata = document.getElementsByName(`S${data}`);
+    let score = document.getElementById("Sco").value;
+    let scoreReady = score.split(",");
+    let temp = "";
+
+
+    if (!scores.has(data)) {
+        scores.set(data, []);
     }
 
-    document.getElementById("play").value = ""
-    save()
+
+    for (let i = 0; i < scoreReady.length; i++) {
+        if (Sdata[0].childElementCount == 3) return;
+
+
+        let yeso = Array.from(scores.get(data));
+        yeso.push(scoreReady[i]);
+        scores.set(data, yeso);
+
+
+        temp = document.createElement("li");
+        temp.innerHTML = scoreReady[i];
+        Sdata[0].appendChild(temp);
+    }
+
+
+    document.getElementById("play").value = "";
+    save();
 }
+
+
+ // When page loads reconstructs every variable
 function reconstruct(){
     let re = JSON.parse(localStorage.getItem("tracker"))
     tracker = new Map(re)
     let reo = JSON.parse(localStorage.getItem("scores"))
     scores = new Map(reo)
-    console.table(tracker)
-    document.getElementById("outp").innerHTML = localStorage.getItem("save")
-    console.table(scores)
-        
-    }
+    let reon = JSON.parse(localStorage.getItem("average"))
+    average = new Map(reon)
+
+
+}
+
 document.addEventListener(onload, reconstruct())
 
+// finds the most popular game
 function popular(){
     let out = document.getElementById("outp")
     out.innerHTML = `<div id="outp"><div class="sum"> <h1>Summary</h1> <div> <h2>Most Played Game</h2> <p class="MP"></p> </div> </div></div>`
@@ -170,9 +186,11 @@ localStorage.setItem("num", gamo[curr][1])
 function sum(){
     document.getElementById("outp").innerHTML = localStorage.getItem("save")
 }
-function average(){
 
-    let average = new Map()
+// Gets the avergae by using the scores map
+function averageo(){
+
+     average = new Map()
    
     for (let i = 0; i < tracker.size; i++) { 
         let ave = 0
@@ -189,7 +207,7 @@ function average(){
     }
     average = new Map ([...average.entries()].sort((a, b) => b[1] - a[1]))
     console.table(average)
-   document.getElementById("outp").innerHTML = `<div id="outp"><div class="sum"> <h1>Leader Board</h1> <div> <h2>Best Players</h2> <ol id="yess" class="MPo"></ol> </div> </div></div>`
+   document.getElementById("outp").innerHTML = `<div id="outp"><div class="sum numb"> <h1>Leader Board</h1> <div> <h2>Best Players</h2> <ol id="yess" class="MPo"></ol> </div> </div></div>`
 let yuurr = Array.from(average) 
     console.log(yuurr)
     for (let z = 0; z < average.size; z++) {
@@ -198,17 +216,44 @@ let yuurr = Array.from(average)
         console.log(realo)
         document.getElementById("yess").appendChild(realo)    }
     
-
+        save()
 }
 
 
 console.log(tracker.keys().length)
-function chart(){
-    let chart = `<canvas id="myChart" style="width:100%;max-width:700px"></canvas>`
-    let pep = Array.from(average.keys())
-    let scored = Array.from(average.values())
-    console.log(pep)
+// Bar graph template with the data from the scores in there
+function chart() {
+    let chartHTML = `<canvas id="myChart" style="width:100%;max-width:700px"></canvas>`;
+    document.getElementById("outp").innerHTML = chartHTML;
+
+
+    let ctx = document.getElementById("myChart").getContext("2d"); // Get context *after* element is added
+    let pep = Array.from(average.keys());
+    let scored = Array.from(average.values());
     console.log(scored)
-    new Chart("myChart", { type: "bar", data: { labels: pep, datasets: [{data: scored }] },});
-    document.getElementById("outp").innerHTML = chart
+
+
+    new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: pep,
+            datasets: [{
+                label: "Scores",
+                data: scored,
+                backgroundColor: "salmon",
+                borderColor: "red",
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });}
+function saveG(){
+    localStorage.setItem("save", document.getElementById("outp").innerHTML)
 }
+console.table(tracker)
