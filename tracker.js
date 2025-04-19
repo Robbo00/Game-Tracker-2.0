@@ -227,7 +227,7 @@ function chart() {
     document.getElementById("outp").innerHTML = chartHTML;
 
 
-    let ctx = document.getElementById("myChart").getContext("2d"); // Get context *after* element is added
+    let ctx = document.getElementById("myChart").getContext("2d"); 
     let pep = Array.from(average.keys());
     let scored = Array.from(average.values());
     console.log(scored)
