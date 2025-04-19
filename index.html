@@ -9,6 +9,12 @@
     src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
     integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
     crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Condensed+One&display=swap" rel="stylesheet">
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
 </head>
 <body>
     <div class="head">
@@ -22,15 +28,15 @@
 
         <label> Add Player</label>
         <input type="text" id="Pval" class="wrk">
-        <button type="submit" id="Pbut" onclick="getP()">Players</button>
+        <button class="button" type="submit" id="Pbut" onclick="getP()">Players</button>
         </div> 
            <div class="labi">
 
         <label> Scores</label>
         <select id="play">
         </select>
-        <input id="Sco" type="text">
-        <button type="submit" onclick="addScores()" >Add scores</button>
+        <input id="Sco" type="text" min="1"  max="100">
+        <button class="button" type="submit" onclick="addScores()" >Add scores</button>
 
         </div> 
            <div class="labi">
@@ -46,7 +52,7 @@
             <option>Tekken</option>
             <option>Gta 5</option>
         </select>
-        <button onclick="addGame()" type="submit">Add Game</button>
+        <button class="button" onclick="addGame()" type="submit">Add Game</button>
            
         </div>  
         
@@ -56,7 +62,7 @@
                 <button onclick="sum()">Display Summary</button>
                 <button onclick="popular()">Most played game</button>
                 <button onclick="average()">Sort by average</button>
-                <button>Chart</button>
+                <button onclick="chart()">Chart</button>
                 <button onclick="clears()">Clear</button>
                 <button onclick="reconstruct()">Test</button>
             </div>

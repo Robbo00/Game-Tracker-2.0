@@ -174,23 +174,27 @@ function average(){
 
     let average = new Map()
    
-    for (let i = 1; i <= tracker.size; i++) { 
+    for (let i = 0; i < tracker.size; i++) { 
         let ave = 0
-        let perso = document.getElementById(`Phead${i}`).innerHTML
-        let = pers = scores.get(perso)
+        let perso = Array.from(tracker.keys())
+        console.log(perso)
+        perso = perso[i]
+        let pers = scores.get(perso)
+        console.log(pers)
         for (let x = 0; x < pers.length; x++) {
                 ave+=parseInt(pers[x])
         }
-        average.set(perso, (ave / pers.length))
+        average.set(perso, Math.floor((ave / pers.length)))
 
     }
     average = new Map ([...average.entries()].sort((a, b) => b[1] - a[1]))
     console.table(average)
-   document.getElementById("outp").innerHTML = `<div id="outp"><div class="sum"> <h1>Summary</h1> <div> <h2>Most Played Game</h2> <ul id="yess" class="MPo"></ul> </div> </div></div>`
-let yuurr = average.keys
+   document.getElementById("outp").innerHTML = `<div id="outp"><div class="sum"> <h1>Leader Board</h1> <div> <h2>Best Players</h2> <ol id="yess" class="MPo"></ol> </div> </div></div>`
+let yuurr = Array.from(average) 
+    console.log(yuurr)
     for (let z = 0; z < average.size; z++) {
         let realo = document.createElement('li')
-        realo.innerHTML = `${z}) ${yuurr[z]} with a score of ${average.get(yuurr[z])}`
+        realo.innerHTML = ` ${yuurr[z][0]} with a score of ${average.get(yuurr[z][0])}`
         console.log(realo)
         document.getElementById("yess").appendChild(realo)    }
     
@@ -199,3 +203,12 @@ let yuurr = average.keys
 
 
 console.log(tracker.keys().length)
+function chart(){
+    let chart = `<canvas id="myChart" style="width:100%;max-width:700px"></canvas>`
+    let pep = Array.from(average.keys())
+    let scored = Array.from(average.values())
+    console.log(pep)
+    console.log(scored)
+    new Chart("myChart", { type: "bar", data: { labels: pep, datasets: [{data: scored }] },});
+    document.getElementById("outp").innerHTML = chart
+}
